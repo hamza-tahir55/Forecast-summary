@@ -14,6 +14,10 @@ os.environ["OPENAI_API_KEY"] = "sk-2e541143af014ebf8f70681786bf2ca2"
 def ping():
     return "pong"
 
+@app.route("/", methods=["GET"])
+def health_check():
+    return "API is alive", 200
+
 
 @app.route("/forecast/summary", methods=["POST"])
 def generate_summary():
