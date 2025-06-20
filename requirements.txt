@@ -1,0 +1,4 @@
+openai
+phidata>=0.0.55
+pathlib
+ipython
