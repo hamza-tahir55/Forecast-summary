@@ -9,6 +9,12 @@ app = Flask(__name__)
 os.environ["DEEPSEEK_API_KEY"] = "sk-2e541143af014ebf8f70681786bf2ca2"
 os.environ["OPENAI_API_KEY"] = "sk-2e541143af014ebf8f70681786bf2ca2"
 
+
+@app.route("/ping")
+def ping():
+    return "pong"
+
+
 @app.route("/forecast/summary", methods=["POST"])
 def generate_summary():
     try:
