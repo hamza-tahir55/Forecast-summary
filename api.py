@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 import os
 from phi.agent import Agent
 from phi.model.deepseek import DeepSeekChat
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)  
 
 # Set API keys
 os.environ["DEEPSEEK_API_KEY"] = "sk-2e541143af014ebf8f70681786bf2ca2"
