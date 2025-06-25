@@ -4,4 +4,4 @@ pathlib
 ipython
 flask
 gunicorn
-
+flask-cors
