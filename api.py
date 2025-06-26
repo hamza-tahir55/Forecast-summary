@@ -50,7 +50,7 @@ def generate_summary():
 
             {forecast_data}
             """],
-            markdown=False,
+            markdown=True,
             pip_install=False,
             structured_outputs=True,
         )
