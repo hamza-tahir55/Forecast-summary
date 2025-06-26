@@ -25,8 +25,9 @@ def health_check():
 @app.route("/forecast/summary", methods=["POST"])
 def generate_summary():
     try:
-        forecast_data = request.get_json()
-        print("Raw request JSON:", forecast_data)
+        data = request.get_json()
+        forecast_data = data.get("data", {})
+        currency = data.get("currency")
 
 
         # Define agent
