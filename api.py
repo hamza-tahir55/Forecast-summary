@@ -53,6 +53,8 @@ def generate_summary():
 
             Return the summary in clean, readable Markdown using headings (###), bold text, bullet points, and clear line breaks.
 
+            You must use following currency symbol {currency}.
+
             """],
             markdown=True,
             pip_install=False,
