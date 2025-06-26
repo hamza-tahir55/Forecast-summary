@@ -35,7 +35,7 @@ def generate_summary():
             role="Generates business forecast summary",
             model=DeepSeekChat(),
             instructions=[f"""
-            Generate a concise, easy-to-understand summary of the user's forecast. The forecast is based on historical actuals and uses a data-driven, time-sensitive modelling technique that captures trends and seasonality.
+            Generate a concise, easy-to-understand summary of the user's forecast. The forecast is based on historical actuals and uses a data-driven, time-sensitive modelling technique that captures trends and seasonality.Generate a concise, easy-to-understand forecast summary as clean HTML (no markdown). 
 
             Summarise the forecasted values for:
             - Income
@@ -49,8 +49,17 @@ def generate_summary():
             Provide a professional ~150-200 word summary highlighting key trends, stability, or volatility. Reference reliability from historical performance in a financial advisor tone. Use data from the provided forecast below:
 
             {forecast_data}
+
+            Wrap each section with appropriate HTML tags:
+            - Use `<h3>` for section headers
+            - Use `<p>` for paragraphs
+            - Use `<ul>` / `<li>` for key takeaways
+            - Use `<strong>` or `<b>` for emphasis
+
+            Ensure the final output is valid, well-indented HTML that can be rendered directly on a website.
+
             """],
-            markdown=True,
+            markdown=False,
             pip_install=False,
             structured_outputs=True,
         )
