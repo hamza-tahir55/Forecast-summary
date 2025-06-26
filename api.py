@@ -56,7 +56,7 @@ def generate_summary():
             - Use `<ul>` / `<li>` for key takeaways
             - Use `<strong>` or `<b>` for emphasis
 
-            Ensure the final output is valid, well-indented HTML that can be rendered directly on a website.
+            Ensure the final output is valid, well-indented HTML that can be rendered directly on a website. Dont use '\n' as this is waste in html.
 
             """],
             markdown=False,
