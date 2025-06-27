@@ -111,7 +111,7 @@ def generate_summary():
             structured_outputs=True,
         )
 
-        result = summary_agent.run("How much data of actuals in months you have for each KPI")
+        result = summary_agent.run()
         return jsonify({"summary": result.content})
 
     except Exception as e:
