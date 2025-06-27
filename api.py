@@ -29,6 +29,56 @@ def generate_summary():
         forecast_data = data.get("data", {})
         currency = data.get("currency")
 
+        
+        def filter_forecast_data(data_list):
+            def parse_date(date_str):
+                for fmt in ("%d-%m-%Y", "%d/%m/%Y"):
+                    try:
+                        return datetime.strptime(date_str, fmt)
+                    except Exception:
+                        continue
+                return None
+
+            def filter_entries(entries, category_name=None):
+                actual_dates = [
+                    parse_date(e.get("date"))
+                    for e in entries
+                    if e.get("is_actual") is True and parse_date(e.get("date")) is not None
+                ]
+                if not actual_dates:
+                    if category_name:
+                        print(f"[{category_name}] No actual entries found.")
+                    return entries
+
+                latest_actual = max(actual_dates)
+                cutoff = latest_actual - relativedelta(months=18)
+
+                if category_name:
+                    print(f"[{category_name}] Latest actual: {latest_actual.strftime('%d-%m-%Y')}, "
+                        f"Cutoff: {cutoff.strftime('%d-%m-%Y')}")
+
+                return [
+                    e for e in entries
+                    if (e.get("is_actual") is True and parse_date(e.get("date")) >= cutoff)
+                    or (e.get("is_actual") is False)
+                ]
+
+            if not isinstance(data_list, list):
+                raise ValueError("Expected a list of categories.")
+
+            filtered_data = []
+            for item in data_list:
+                if "sum_values" in item and isinstance(item["sum_values"], list):
+                    item_copy = dict(item)
+                    item_copy["sum_values"] = filter_entries(item["sum_values"], item.get("category", ""))
+                    filtered_data.append(item_copy)
+                else:
+                    filtered_data.append(item)
+
+            return filtered_data
+
+        new_forecast_data = filter_forecast_data(forecast_data)
+
 
         # Define agent
         summary_agent = Agent(
@@ -49,7 +99,7 @@ def generate_summary():
 
             Provide a professional ~150-200 word summary highlighting key trends, stability, or volatility. Reference reliability from historical performance in a financial advisor tone. Use data from the provided forecast below:
 
-            {forecast_data}
+            {new_forecast_data}
 
             Return the summary in clean, readable Markdown using headings (###), bold text, bullet points, and clear line breaks.
 
